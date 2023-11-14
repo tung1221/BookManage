@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BookManage.Models.OrderDetail>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<p>
+    <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Back to Home</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Name)
+            </th>
+            <th>Image</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               @Html.DisplayFor(modelItem => item.Book.Id) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Name)
+            </td>
+                <td>
+                    <img src="~/@Html.DisplayFor(modelItem => item.Book.Image)" height="200" width="150" />
+                    
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

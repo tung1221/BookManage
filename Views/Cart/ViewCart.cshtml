@@ -1,0 +1,99 @@
+﻿@model IEnumerable<BookManage.Models.Book>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json;
+@using BookManage.Models
+@{
+    ViewData["Title"] = "ViewCart";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    decimal total = 0;
+}
+
+<h1>ViewCart</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            total += item.Price * item.Quantity;
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    <a class="text-decoration-none" href="~/Cart/update?id=@item.Id&&type=1">+</a>
+                @Html.DisplayFor(modelItem => item.Quantity)
+                    <a class="text-decoration-none" href="~/Cart/update?id=@item.Id&&type=0">-</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                    <img src="~/@Html.DisplayFor(modelItem => item.Image)" height="200" width="150">
+
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
+<h3>Total : @total</h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="get" action="payment">
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input name="email" class="form-control" required />
+            </div>
+            @{
+                string address = "";
+                if (Context.Session.GetString("account") != null)
+                {
+                    Account user = JsonConvert.DeserializeObject<Account>(Context.Session.GetString("account"));
+                    address = user.Address;
+                }
+            }
+            <div class="form-group">
+                <label class="control-label">To address</label>
+                <input name="address" value="@address" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="payment" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h3>
+    @ViewBag.mess
+</h3>

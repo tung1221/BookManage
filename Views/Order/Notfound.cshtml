@@ -1,0 +1,15 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "NotFound";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1>404</h1>
+    
+    <div class="container">
+        <h4>page not found</h4>
+        <a asp-area="" asp-controller="Home" asp-action="Index">Back to HomePage</a>
+    </div>
+</div>

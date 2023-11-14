@@ -1,0 +1,82 @@
+﻿@model BookManage.Models.Account
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "CreateAccount";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<h1>CreateAccount</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" action="~/Home/CreateAccount" onsubmit="validateForm(event)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label">Name</label>
+                <input asp-for="FullName" class="form-control" required />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"> Phone Number</label>
+                <input id="phone" asp-for="Phone" class="form-control" placeholder="012-345-6789" required/>
+                <span id="phone-error" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label">Address</label>
+                <input asp-for="Address" class="form-control" />
+                <span id="address-error" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label">UserName</label>
+                <input asp-for="Username" class="form-control"  required/>
+                <span id="User-error" class="text-danger">@ViewBag.Message</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Password</label>
+                <input id="password" asp-for="Password" class="form-control" required />
+                
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Repassword</label>
+                <input id="Repassword"  class="form-control" required />
+                <span id="Repassword-error" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="" href="~/Home/Login">Back to Login</a>
+</div>
+
+<script>
+    function validateForm(event) {
+
+        var phone = document.getElementById("phone").value;
+        var password = document.getElementById("password").value;
+        var repassword = document.getElementById("Repassword").value;
+
+
+        var phoneRegex = /^\d{10}$/;
+
+
+        if (!phoneRegex.test(phone)) {
+            event.preventDefault();
+            document.getElementById("phone-error").innerText = "Phone just only number and has 10 characters";
+        }
+
+        if (password !== repassword) {
+            event.preventDefault();
+            document.getElementById("Repassword-error").innerText = "Passwords do not match.";
+        }
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<BookManage.Models.Order>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ListOrder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<script>
+    function check(event) {
+        // Display a confirmation dialog box
+        var confirmation = confirm("Are you sure you want to delete?");
+
+        // Check if the user confirmed the deletion
+        if (!confirmation) {
+            event.preventDefault();
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+</script>
+
+<h1>Order Manage</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            
+            <td>
+                    <a class="btn btn-primary" href="@Url.Action("Update", "Order", new { id = item.Id })">Update</a>
+                    <a class="btn btn-info" href="@Url.Action("Details", "Order", new { id = item.Id })">Detail</a>
+                    <a class="btn btn-danger" href="@Url.Action("Delete", "Order",new { id = item.Id })" onclick="check(event)">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<h3>@ViewBag.mess</h3>
